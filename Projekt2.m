@@ -1,185 +1,162 @@
 %function pmin = Projekt2()
 
-data = readtable("data_30.csv");
-t_vals = data.t;
-x1 = data.x1;
-x2 = data.x2;
-x3 = data.x3;
-y1 = data.y1;
-y2 = data.y2;
-y3 = data.y3;
-N = length(t_vals);
+  data = readtable("data_30.csv");
+  t_vals = data.t;
+  x1 = data.x1;
+  x2 = data.x2;
+  x3 = data.x3;
+  y1 = data.y1;
+  y2 = data.y2;
+  y3 = data.y3;
+  N = length(t_vals);
+  
+  data2 = readtable("query_30.csv");
+  T_query = data2.t;
+  
+  option = 0;
+  dx1 = ApproximateDerivative(T_query,x1,option);
+  dy1 = ApproximateDerivative(T_query,y1,option);
+  dx2 = ApproximateDerivative(T_query,x2,option);
+  dy2 = ApproximateDerivative(T_query,y2,option);
+  dx3 = ApproximateDerivative(T_query,x3,option);
+  dy3 = ApproximateDerivative(T_query,y3,option);
 
-data2 = readtable("query_30.csv");
-T_query = data2.t;
-
-option = 0;
-dx1 = ApproximateDerivative(t_vals,x1,option);
-dy1 = ApproximateDerivative(t_vals,y1,option);
-dx2 = ApproximateDerivative(t_vals,x2,option);
-dy2 = ApproximateDerivative(t_vals,y2,option);
-dx3 = ApproximateDerivative(t_vals,x3,option);
-dy3 = ApproximateDerivative(t_vals,y3,option);
-
-ddx1 = ApproximateDerivative(t_vals,dx1,option);
-ddy1 = ApproximateDerivative(t_vals,dy1,option);
-ddx2 = ApproximateDerivative(t_vals,dx2,option);
-ddy2 = ApproximateDerivative(t_vals,dy2,option);
-ddx3 = ApproximateDerivative(t_vals,dx3,option);
-ddy3 = ApproximateDerivative(t_vals,dy3,option);
-
-% %% Wypisywanie
-set(0,'defaultAxesLineStyleOrder',{'-o'});
-c1 = "#0000FF";
-c2 = "#FF0000";
-c3 = "#FFA000";
-
-
-pminmin = ones(13,1);
-critminmin = 1;
-
-%% Aproksymacja masy
-Gm_mat = zeros(6,N);
-for i = 1:N
-  r12 = sqrt((x1(i)-x2(i))^2 + (y1(i)-y2(i))^2);
-  r13 = sqrt((x1(i)-x3(i))^2 + (y1(i)-y3(i))^2);
-  r23 = sqrt((x2(i)-x3(i))^2 + (y2(i)-y3(i))^2);
-  Gm_mat(1,i) = ddx1(i) / ((x2(i) - x1(i))/r12^3 + (x3(i) - x1(i))/r13^3);
-  Gm_mat(2,i) = ddy1(i) / ((y2(i) - y1(i))/r12^3 + (y3(i) - y1(i))/r13^3);
-  Gm_mat(3,i) = ddx2(i) / ((x3(i) - x2(i))/r23^3 + (x1(i) - x2(i))/r12^3);
-  Gm_mat(4,i) = ddy2(i) / ((y3(i) - y2(i))/r23^3 + (y1(i) - y2(i))/r12^3);
-  Gm_mat(5,i) = ddx3(i) / ((x1(i) - x3(i))/r13^3 + (x2(i) - x3(i))/r23^3);
-  Gm_mat(6,i) = ddy3(i) / ((x1(i) - x3(i))/r13^3 + (y2(i) - y3(i))/r23^3);
-end
-
-Gm_filtered = Gm_mat(:, 3:end-2);
-Gm_filtered = Gm_filtered(Gm_filtered > 0.1 & Gm_filtered < 10);
-Gm = mean(Gm_filtered);
-
-%Gm = 0.7;
-
-%for Gm = linspace(0.1,0.2,100)
-Gm = 0.361230247435317
-
-%% Rozwiązywanie
+  Gm = approximate_mass(x1,x2,x3,y1,y2,y3,t_vals)
+  % Gm = 0.361230247435317; % Najlepsza znaleziona masa
+  %Gm = 0.361230247435317
 
   % Initial conditions
-  %p0 = [x1(1); y1(1); x2(1); y2(1); x3(1); y3(1); 
-  %      dx1(1); dy1(1); dx2(1); dy2(1); dx3(1); dy3(1); Gm];
+  p0 = [ x1(1);  y1(1);  x2(1);  y2(1);  x3(1);  y3(1); 
+        dx1(1); dy1(1); dx2(1); dy2(1); dx3(1); dy3(1); Gm];
 
-  p0 = [  
-  -0.553262753637102;
-   0.313624338201325;
-   0.231127787152874;
-  -0.373336085594302;
-   0.322262316580732;
-   0.059426032421662;
-  -0.369138523690641;
-  -0.610833922133723;
-   0.778373194822552;
-   0.287622984199010;
-  -0.409745765079084;
-   0.322932249363613;
-   0.361230246473839]
-
-  tic
-  pmin = fminsearch(@(p) crit(p,t_vals,[x1,y1,x2,y2,x3,y3]), p0, ...
-    optimset('TolX',1e-15,'TolFun',1e-15,'MaxIter',10000,'MaxFunEvals',20000));
-  toc
+  opts = optimset('TolX',1e-6,'TolFun',1e-6, ...
+                  'MaxIter',1e4,'MaxFunEvals',1e4);
+  pmin = fminsearch(@(p) crit(p,t_vals,[x1,y1,x2,y2,x3,y3]), p0, opts);
   
   % Define the system of equations
   odefun = @(t, z) odefunction(t, z, Gm);
-  %odefun = @(t, z) three_body_ode(t, z, Gm);
   
   % Solve using ode45
-  [T_query, z] = ode45(odefun, T_query, pmin(1:12), odeset('RelTol',3e-14,'AbsTol',3e-14));
+  opts = odeset('RelTol',1e-12,'AbsTol',1e-12);
+  [T_query, z] = ode45(odefun, T_query, pmin(1:12), opts);
   
-  % Extract the positions and velocities for each body
-  x1_app = z(:, 1);
-  y1_app = z(:, 2);
-  
-  x2_app = z(:, 3);
-  y2_app = z(:, 4);
-  
-  x3_app = z(:, 5);
-  y3_app = z(:, 6);
-  
-  fprintf("Gm = %d\n",Gm);
-  pmin
-  crit(pmin,t_vals,[x1,y1,x2,y2,x3,y3])
-  
-  if crit(pmin,t_vals,[x1,y1,x2,y2,x3,y3]) < critminmin
-    pminmin = pmin;
-    critminmin = crit(pmin,t_vals,[x1,y1,x2,y2,x3,y3]);
-  end
-
-  % Plot the trajectories of the three bodies
-  figure(3);clf;
-  ylim([-0.7, 0.7]);
-  xlim([-0.7, 0.7]);
-  hold on;
-  plot(x1, y1, Color=c1,DisplayName='Body 1',LineStyle="--"); % Body 1
-  plot(x2, y2, Color=c2,DisplayName='Body 2',LineStyle="--"); % Body 2
-  plot(x3, y3, Color=c3,DisplayName='Body 3',LineStyle="--"); % Body 3
-  plot(x1(1),y1(1),Color=c1,DisplayName='Body 1 Start', ...
-    Marker="*",MarkerSize=20)
-  plot(x2(1),y2(1),Color=c2,DisplayName='Body 2 Start', ...
-    Marker="*",MarkerSize=20)
-  plot(x3(1),y3(1),Color=c3,DisplayName='Body 3 Start', ...
-    Marker="*",MarkerSize=20)
-
-  plot(x1_app, y1_app, Color=c1,DisplayName='Body 1 approx'); % Body 1
-  plot(x2_app, y2_app, Color=c2,DisplayName='Body 2 approx'); % Body 2
-  plot(x3_app, y3_app, Color=c3,DisplayName='Body 3 approx'); % Body 3
-  plot(x1_app(1),y1_app(1),Color=c1,DisplayName='App. Body 1 Start', ...
-    Marker="*",MarkerSize=20)
-  plot(x2_app(1),y2_app(1),Color=c2,DisplayName='App. Body 2 Start', ...
-    Marker="*",MarkerSize=20)
-  plot(x3_app(1),y3_app(1),Color=c3,DisplayName='App. Body 3 Start', ...
-    Marker="*",MarkerSize=20)
-  xlabel('x');
-  ylabel('y');
-  title('Three-Body Problem in 2D');
-  legend('show');
-
-  % x1_app = x1_app';
-  % x2_app = x2_app';
-  % x3_app = x3_app';
-  % y1_app = y1_app';
-  % y2_app = y2_app';
-  % y3_app = y3_app';
-  size(x1_app)
-  test_solution_30(x1_app,y1_app,x2_app,y2_app,x3_app,y3_app);
-
-
-
+  x1_calc = z(:, 1);
+  y1_calc = z(:, 2);
+  x2_calc = z(:, 3);
+  y2_calc = z(:, 4);
+  x3_calc = z(:, 5);
+  y3_calc = z(:, 6);
+ 
+  c1 = "#0000FF";
+  c2 = "#FF0000";
+  c3 = "#FFA000";
   figure(1); clf; hold on; 
+  ylim([-0.66, 0.66]);
+  xlim([-0.66, 0.66]);
   set(gca,'Color','k')
-  plot(x1,y1,Color=c1,DisplayName='Body 1',Marker='o');
-  plot(x2,y2,Color=c2,DisplayName='Body 2',Marker='o');
-  plot(x3,y3,Color=c3,DisplayName='Body 3',Marker='o');
-  plot(x1(1),y1(1),Color=c1,DisplayName='Body 1 Start', ...
-    Marker="*",MarkerSize=20)
-  plot(x2(1),y2(1),Color=c2,DisplayName='Body 2 Start', ...
-    Marker="*",MarkerSize=20)
-  plot(x3(1),y3(1),Color=c3,DisplayName='Body 3 Start', ...
-    Marker="*",MarkerSize=20)
-  legend("show",Color="#FFFFFF",Location="southeast")
+
+  opts = {'LineStyle','none','Marker','o','MarkerSize',6};
+  plot(x1,y1,opts{:},DisplayName='Body 1 Data',Color=c1);
+  plot(x2,y2,opts{:},DisplayName='Body 2 Data',Color=c2);
+  plot(x3,y3,opts{:},DisplayName='Body 3 Data',Color=c3);
+
+  opts = {'LineStyle','none','Marker','o','MarkerSize',24};
+  plot(x1(1),y1(1),opts{:},DisplayName='Body 1 Start Data',Color=c1);
+  plot(x2(1),y2(1),opts{:},DisplayName='Body 2 Start Data',Color=c2);
+  plot(x3(1),y3(1),opts{:},DisplayName='Body 3 Start Data',Color=c3);
+
+  opts = {'LineStyle','--','Marker','none','MarkerSize',24};
+  plot(x1_calc,y1_calc,opts{:},DisplayName='Body 1',Color=c1);
+  plot(x2_calc,y2_calc,opts{:},DisplayName='Body 2',Color=c2);
+  plot(x3_calc,y3_calc,opts{:},DisplayName='Body 3',Color=c3);
+
+  opts = {'LineStyle','none','Marker','*','MarkerSize',30};
+  plot(x1_calc(1),y1_calc(1),opts{:},DisplayName='Body 1 Start',Color=c1);
+  plot(x2_calc(1),y2_calc(1),opts{:},DisplayName='Body 2 Start',Color=c2);
+  plot(x3_calc(1),y3_calc(1),opts{:},DisplayName='Body 3 Start',Color=c3);
+
+  title('Problem trzech ciał');
+  xlabel('x'); ylabel('y');
+  legend("show",Color="#FFFFFF",Location="northeast")
   
-  figure(2); clf;
-  subplot(3,2,1); hold on; title("x1");
-  plot(t_vals,x1); plot(t_vals,dx1); plot(t_vals,ddx1); 
-  subplot(3,2,2); hold on; title("y1");
-  plot(t_vals,y1); plot(t_vals,dy1); plot(t_vals,ddy1); 
-  subplot(3,2,3); hold on; title("x2");
-  plot(t_vals,x2); plot(t_vals,dx2); plot(t_vals,ddx2); 
-  subplot(3,2,4); hold on; title("y2");
-  plot(t_vals,y2); plot(t_vals,dy2); plot(t_vals,ddy2); 
-  subplot(3,2,5); hold on; title("x3");
-  plot(t_vals,x3); plot(t_vals,dx3); plot(t_vals,ddx3); 
-  subplot(3,2,6); hold on; title("y3");
-  plot(t_vals,y3); plot(t_vals,dy3); plot(t_vals,ddy3); 
-  
-  figure(3)
+  test_solution_30(x1_calc,y1_calc,x2_calc,y2_calc,x3_calc,y3_calc);
+
+
+
 
 %end % function
+% 
+% x1 = x1_calc;
+% x2 = x2_calc;
+% x3 = x3_calc;
+% 
+% y1 = y1_calc;
+% y2 = y2_calc;
+% y3 = y3_calc;
+% 
+% option = 0;
+% dx1 = ApproximateDerivative(T_query,x1,option);
+% dy1 = ApproximateDerivative(T_query,y1,option);
+% dx2 = ApproximateDerivative(T_query,x2,option);
+% dy2 = ApproximateDerivative(T_query,y2,option);
+% dx3 = ApproximateDerivative(T_query,x3,option);
+% dy3 = ApproximateDerivative(T_query,y3,option);
+% 
+% ddx1 = ApproximateDerivative(T_query,dx1,option);
+% ddy1 = ApproximateDerivative(T_query,dy1,option);
+% ddx2 = ApproximateDerivative(T_query,dx2,option);
+% ddy2 = ApproximateDerivative(T_query,dy2,option);
+% ddx3 = ApproximateDerivative(T_query,dx3,option);
+% ddy3 = ApproximateDerivative(T_query,dy3,option);
+% 
+% figure(2); clf;
+% subplot(3,2,1); hold on; title("x1");
+% plot(T_query,x1); plot(T_query,dx1); plot(T_query,ddx1); 
+% subplot(3,2,2); hold on; title("y1");
+% plot(T_query,y1); plot(T_query,dy1); plot(T_query,ddy1); 
+% subplot(3,2,3); hold on; title("x2");
+% plot(T_query,x2); plot(T_query,dx2); plot(T_query,ddx2); 
+% subplot(3,2,4); hold on; title("y2");
+% plot(T_query,y2); plot(T_query,dy2); plot(T_query,ddy2); 
+% subplot(3,2,5); hold on; title("x3");
+% plot(T_query,x3); plot(T_query,dx3); plot(T_query,ddx3); 
+% subplot(3,2,6); hold on; title("y3");
+% plot(T_query,y3); plot(T_query,dy3); plot(T_query,ddy3); 
+% 
+% 
+%   approximate_mass(x1,x2,x3,y1,y2,y3,T_query(25)-T_query(24))
+
+    % option = 0;
+  % dx1 = ApproximateDerivative(t_vals,x1,option);
+  % dy1 = ApproximateDerivative(t_vals,y1,option);
+  % dx2 = ApproximateDerivative(t_vals,x2,option);
+  % dy2 = ApproximateDerivative(t_vals,y2,option);
+  % dx3 = ApproximateDerivative(t_vals,x3,option);
+  % dy3 = ApproximateDerivative(t_vals,y3,option);
+  % 
+  % ddx1 = ApproximateDerivative(t_vals,dx1,option);
+  % ddy1 = ApproximateDerivative(t_vals,dy1,option);
+  % ddx2 = ApproximateDerivative(t_vals,dx2,option);
+  % ddy2 = ApproximateDerivative(t_vals,dy2,option);
+  % ddx3 = ApproximateDerivative(t_vals,dx3,option);
+  % ddy3 = ApproximateDerivative(t_vals,dy3,option);
+  % 
+  % %% Aproksymacja masy
+  % Gm_mat = zeros(N,6);
+  % for i = 1:N
+  %   r12 = sqrt((x1(i)-x2(i))^2 + (y1(i)-y2(i))^2);
+  %   r13 = sqrt((x1(i)-x3(i))^2 + (y1(i)-y3(i))^2);
+  %   r23 = sqrt((x2(i)-x3(i))^2 + (y2(i)-y3(i))^2);
+  %   Gm_mat(i,1) = ddx1(i)/((x2(i) - x1(i))/r12^3 + (x3(i) - x1(i))/r13^3);
+  %   Gm_mat(i,2) = ddy1(i)/((y2(i) - y1(i))/r12^3 + (y3(i) - y1(i))/r13^3);
+  %   Gm_mat(i,3) = ddx2(i)/((x3(i) - x2(i))/r23^3 + (x1(i) - x2(i))/r12^3);
+  %   Gm_mat(i,4) = ddy2(i)/((y3(i) - y2(i))/r23^3 + (y1(i) - y2(i))/r12^3);
+  %   Gm_mat(i,5) = ddx3(i)/((x1(i) - x3(i))/r13^3 + (x2(i) - x3(i))/r23^3);
+  %   Gm_mat(i,6) = ddy3(i)/((x1(i) - x3(i))/r13^3 + (y2(i) - y3(i))/r23^3);
+  % end
+  % Gm_mat_old = Gm_mat;
+  % Gm_trimmmed = (Gm_mat(3:N-2, 4));
+  % Gm_filtered = Gm_trimmmed(Gm_trimmmed > 0.1 & Gm_trimmmed < 10);
+  % Gm_mean = mean(Gm_filtered)
+  % Gm_geomean = prod(Gm_filtered)^(1/length(Gm_filtered))
+  % Gm_harmonic = length(Gm_filtered) / sum(1 ./ Gm_filtered)
