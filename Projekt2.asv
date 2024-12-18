@@ -65,7 +65,7 @@
   plot(x2(1),y2(1),opts{:},DisplayName='Body 2 Start Data',Color=c2);
   plot(x3(1),y3(1),opts{:},DisplayName='Body 3 Start Data',Color=c3);
 
-  opts = {'LineStyle','--','Marker','.','MarkerSize',16};
+  opts = {'LineStyle','--','Marker','.','MarkerSize',24};
   plot(x1_calc,y1_calc,opts{:},DisplayName='Body 1',Color=c1);
   plot(x2_calc,y2_calc,opts{:},DisplayName='Body 2',Color=c2);
   plot(x3_calc,y3_calc,opts{:},DisplayName='Body 3',Color=c3);

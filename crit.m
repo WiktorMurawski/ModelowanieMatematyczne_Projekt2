@@ -5,7 +5,7 @@ function J = crit(p,T,exact)
 
   % Solve using ode45
   opts = odeset('RelTol',1e-9,'AbsTol',1e-9);
-  [T, z] = ode45(odefun, T, p(1:12), opts);
+  [~, z] = ode45(odefun, T, p(1:12), opts);
 
   % Calculate sum of MSEs
   J = mean((z(:,1:6) - exact(:,1:6)).^2, 'all');
