@@ -1,4 +1,4 @@
-function dzdt = odefunction(t, z, Gm)
+function dzdt = odefunction(~, z, Gm)
     x1 = z(1); 
     y1 = z(2); 
     x2 = z(3); 
