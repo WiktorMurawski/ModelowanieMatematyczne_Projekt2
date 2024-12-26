@@ -1,4 +1,4 @@
-function [] = Visualize(data,calc)
+function [] = Visualize(data, calc)
   x1_data = data(:, 1); y1_data = data(:, 2);
   x2_data = data(:, 3); y2_data = data(:, 4);
   x3_data = data(:, 5); y3_data = data(:, 6);
@@ -8,7 +8,6 @@ function [] = Visualize(data,calc)
 
   c1 = "#0000FF";
   c2 = "#FF0000";
-  %c3 = "#FF00FF";
   c3 = "#00FF00";
   figure(1); clf; hold on;
   title('Problem trzech ciał');
@@ -20,7 +19,7 @@ function [] = Visualize(data,calc)
   minx = min(min([x1_calc, x2_calc, x3_calc]));
   a = 1.05;
   ylim([a*miny, a*maxy]);  xlim([a*minx, a*maxx]);
-  %set(gca,"Color",'k')
+  %set(gca, "Color", 'k')
 
   % Wyświetl pozycje początkowe z danych
   opts = {'LineStyle', 'none', 'Marker', 'o', 'MarkerSize', 24};
@@ -58,7 +57,7 @@ function [] = Visualize(data,calc)
   o3 = animatedline(opts{:}, Color=c3, ...
     DisplayName='Obiekt 3');
 
-  legend("show", Color="#FFFFFF", Location="bestoutside")
+  legend("show", Interpreter="latex", Color="#FFFFFF", Location="bestoutside")
 
   N = length(x1_calc);
   for i = 1:N

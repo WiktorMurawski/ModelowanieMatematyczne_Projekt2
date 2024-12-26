@@ -113,22 +113,50 @@
 	\begin{spacing}{1.5}
 		\begin{tabbing}
 			\hspace{5cm} \= \hspace{10cm} \= \kill
-			
+			\text{URRZ} \> układ równań różniczkowych zwyczajnych \\
+			$t$ \> czas \\
+			$x_k(t)$ i $y_k(t)$ \> współrzędne położenia $k$-tego obiektu \\
+			$m$ \> masa obiektu \\
+			$G$ \> stała grawitacyjna \\
+			$r_{jk}(t)$ \> odległość pomiędzy obiektem $j$ a obiektem $k$ dla $j,k = 1,2,3$.
 		\end{tabbing}
 	\end{spacing}
 	\newpage
 	
 	% Wprowadzenie
 	\section{Wprowadzenie}
-	Dany jest następujący układ równań różniczkowych zwyczajnych (URRZ):
+	Dane zawarte w pliku \texttt{data\_30.csv} reprezentują wyniki pomiaru położenia trzech obiektów o
+	identycznych masach $m$, przyciągających się grawitacyjnie. Trajektorie ruchu tych obiektów opisane
+	są następującym układem nieliniowych równań różniczkowych zwyczajnych drugiego rzędu:
+	\[\hspace{-5cm}
+	\left\{
+	\begin{alignedat}{4}
+		\dfrac{d^2x_1(t)}{dt^2} & = Gm \Big( & \dfrac{x_2(t) - x_1(t)}{r^3_{12}(t)} & + \dfrac{x_3(t) - x_1(t)}{r^3_{13}(t)} & \Big) \\
+		\dfrac{d^2y_1(t)}{dt^2} & = Gm \Big( & \dfrac{y_2(t) - y_1(t)}{r^3_{12}(t)} & + \dfrac{y_3(t) - y_1(t)}{r^3_{13}(t)} & \Big) \\
+		\dfrac{d^2x_2(t)}{dt^2} & = Gm \Big( & \dfrac{x_3(t) - x_2(t)}{r^3_{23}(t)} & + \dfrac{x_1(t) - x_2(t)}{r^3_{12}(t)} & \Big) \\
+		\dfrac{d^2y_2(t)}{dt^2} & = Gm \Big( & \dfrac{y_3(t) - y_2(t)}{r^3_{23}(t)} & + \dfrac{y_1(t) - y_2(t)}{r^3_{12}(t)} & \Big) \\
+		\dfrac{d^2x_3(t)}{dt^2} & = Gm \Big( & \dfrac{x_1(t) - x_3(t)}{r^3_{13}(t)} & + \dfrac{x_2(t) - x_3(t)}{r^3_{23}(t)} & \Big) \\
+		\dfrac{d^2y_3(t)}{dt^2} & = Gm \Big( & \dfrac{y_1(t) - y_3(t)}{r^3_{13}(t)} & + \dfrac{y_2(t) - y_3(t)}{r^3_{23}(t)} & \Big)
+	\end{alignedat}
+	\right.
+	\]
+	gdzie:
+	\begin{itemize}[label=\footnotesize$\bullet$, topsep=0pt, parsep=0pt, leftmargin=10mm]
+		\item $t$ oznacza czas,
+		\item $x_k(t)$ i $y_k(t)$ to współrzędne położenia $k$-tego obiektu dla $k = 1,2,3$,
+		\item $m$ to masa obiektu,
+		\item $G$ to stała grawitacyjna,
+		\item $r_{jk}(t) \equiv \sqrt{\left[x_k(t) - x_j(t)\right]^2 + \left[y_k(t) - y_j(t)\right]^2}$ dla $j,k = 1,2,3$.
+	\end{itemize}
 	
-	\newpage
+	%\newpage
 	
 	% Metodyka i wyniki doświadczeń
 	\section{Metodyka i Wyniki Doświadczeń}
 	%Opis wykonanych doświadczeń i obliczeń, zarówno w środowisku MATLAB, jak i na papierze. Szczegóły pozwalające na odtworzenie wyników.
 	
-	\newpage
+	%\newpage
+	
 	% Dyskusja wyników eksperymentów numerycznych
 	\section{Dyskusja Wyników Eksperymentów Numerycznych}
 	
@@ -147,24 +175,17 @@
 	\section*{Listing Programów}
 	\addcontentsline{toc}{section}{Listing Programów}
 	
-	\subsection*{plik \texttt{Projekt2.m}}
+	\subsection*{plik: \texttt{Projekt2.m}}\vspace{-0.5em}
 	\lstinputlisting{../Projekt2.m}
-	%\newpage
-	%\subsection*{plik \texttt{solve\_using\_dsolve.m}}
-	%\lstinputlisting{../solve_using_dsolve.m}
-	%\subsection*{plik \texttt{plot\_exact.m}}
-	%\lstinputlisting{../plot_exact.m}
-	%\subsection*{plik \texttt{metoda1.m}}
-	%\lstinputlisting{../metoda1.m}
-	%\newpage
-	%\subsection*{plik \texttt{metoda2.m}}
-	%\lstinputlisting{../metoda2.m}
-	%\subsection*{plik \texttt{metoda3.m}}
-	%\lstinputlisting{../metoda3.m}
-	%\newpage
-	%\subsection*{plik \texttt{plot\_results.m}}
-	%\lstinputlisting{../plot_results.m}
-	%\subsection*{plik \texttt{calculate\_error.m}}
-	%\lstinputlisting{../calculate_error.m}
-	
+	\subsection*{plik: \texttt{ApproximateDerivative.m}}\vspace{-0.5em}
+	\lstinputlisting{../ApproximateDerivative.m}
+	\subsection*{plik: \texttt{ODEFunction.m}}\vspace{-0.5em}
+	\lstinputlisting{../ODEFunction.m}
+	\subsection*{plik: \texttt{Criterium.m}}\vspace{-0.5em}
+	\lstinputlisting{../Criterium.m}
+	\subsection*{plik: \texttt{ApproximateMass.m}}\vspace{-0.5em}
+	\lstinputlisting{../ApproximateMass.m}
+	\subsection*{plik: \texttt{Visualize.m}}\vspace{-0.5em}
+	\lstinputlisting{../Visualize.m}
+
 \end{document}
