@@ -1,14 +1,10 @@
 function result = Projekt2()
-  
   % Wczytanie danych pomiarowych
   data = readtable("data_30.csv");
-  t_vals = data.t;
-  x1 = data.x1;
-  x2 = data.x2;
-  x3 = data.x3;
-  y1 = data.y1;
-  y2 = data.y2;
-  y3 = data.y3;
+  t_data = data.t;
+  x1 = data.x1; y1 = data.y1;
+  x2 = data.x2; y2 = data.y2;
+  x3 = data.x3; y3 = data.y3;
   data = [x1,y1,x2,y2,x3,y3];
 
   % Wczytanie wartości czasu
@@ -16,7 +12,7 @@ function result = Projekt2()
   T_query = data2.t;
   
   % Przybliżenie początkowe masy
-  Gm = approximate_mass(t_vals,x1,x2,x3,y1,y2,y3);
+  Gm = approximate_mass(t_data,x1,x2,x3,y1,y2,y3);
   % Gm = 0.361115455784322; % Najlepsza znaleziona masa
 
   % Przybliżenie początkowych wartości pochodnych
@@ -34,7 +30,7 @@ function result = Projekt2()
   % Minimalizacja
   opts = optimset('TolX',1e-6,'TolFun',1e-6, ...
                   'MaxIter',1e4,'MaxFunEvals',1e4);
-  pmin = fminsearch(@(p) crit(p,t_vals,data), p0, opts);
+  pmin = fminsearch(@(p) crit(p,t_data,data), p0, opts);
   
   % Zdefiniowanie rozwiązywanego URRZ
   odefun = @(t, z) odefunction(t, z, Gm);
@@ -44,12 +40,9 @@ function result = Projekt2()
   [~, z] = ode45(odefun, T_query, pmin(1:12), opts);
   
   % Przypisanie wyznaczonych wartości x1,y1,x2,y2,x3,y3 w zadanych chwilach
-  x1 = z(:, 1);
-  y1 = z(:, 2);
-  x2 = z(:, 3);
-  y2 = z(:, 4);
-  x3 = z(:, 5);
-  y3 = z(:, 6);
+  x1 = z(:, 1); y1 = z(:, 2);
+  x2 = z(:, 3); y2 = z(:, 4);
+  x3 = z(:, 5); y3 = z(:, 6);
   result = [x1,y1,x2,y2,x3,y3];
 
   % Wizualizacja orbit

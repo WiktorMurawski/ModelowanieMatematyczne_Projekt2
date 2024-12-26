@@ -1,6 +1,4 @@
-function J = crit(p,T,data)
-% Funkcja - kryterium
-
+function J = Criterion(p,T,data)
   % Przypisanie masy do zmiennej
   Gm = p(13);
 
@@ -11,7 +9,7 @@ function J = crit(p,T,data)
   opts = odeset('RelTol',1e-9,'AbsTol',1e-9);
   [~, z] = ode45(odefun, T, p(1:12), opts);
 
-  % Obliczanie błędu średniokwadratowego
+  % Obliczenie błędu średniokwadratowego
   J = sum((z(:,1:6) - data(:,1:6)).^2, "all");
 
 end % function

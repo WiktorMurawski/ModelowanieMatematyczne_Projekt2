@@ -1,16 +1,10 @@
-function dzdt = odefunction(~, z, Gm)
-    x1 = z(1); 
-    y1 = z(2); 
-    x2 = z(3); 
-    y2 = z(4); 
-    x3 = z(5); 
-    y3 = z(6); 
-    dx1 = z(7); 
-    dy1 = z(8);
-    dx2 = z(9); 
-    dy2 = z(10);
-    dx3 = z(11); 
-    dy3 = z(12);
+function dzdt = ODEFunction(~, z, Gm)
+    x1 = z(1); y1 = z(2); 
+    x2 = z(3); y2 = z(4); 
+    x3 = z(5); y3 = z(6); 
+    dx1 = z(7);  dy1 = z(8);
+    dx2 = z(9);  dy2 = z(10);
+    dx3 = z(11); dy3 = z(12);
     
     r12 = sqrt((x1 - x2)^2 + (y1 - y2)^2);
     r13 = sqrt((x1 - x3)^2 + (y1 - y3)^2);

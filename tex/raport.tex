@@ -1,0 +1,170 @@
+\documentclass[a4paper, 12pt, twoside, openany]{article}
+
+% Pakiety
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[hidelinks]{hyperref} % Hiperłącza bez ramek
+%\usepackage{hyperref} % Hiperłącza
+\usepackage{amsmath, amssymb} % Pakiety matematyczne
+\usepackage{mathtools}
+\usepackage{graphicx} % Obsługa grafiki
+\graphicspath{{../images/}}
+\usepackage{enumitem}
+%\usepackage{fontspec}
+\usepackage{float}
+\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage{setspace}
+\usepackage{geometry} % Ustawienia marginesów
+\geometry{
+	inner=20mm, % margines wewnętrzny
+	outer=20mm, % margines zewnętrzny
+	top=25mm,   % margines górny
+	bottom=25mm % margines dolny
+}
+\usepackage{xcolor}   % Pakiet do kolorów
+\usepackage{listingsutf8} % Pakiet do listingu kodu
+\lstdefinestyle{mystyle}{
+	inputencoding=utf8,           % Kodowanie UTF-8
+	extendedchars=true,           % Obsługa znaków spoza ASCII
+	basicstyle=\ttfamily\footnotesize,   % Styl podstawowy
+	language=Matlab,              % Język kodu
+	keywordstyle=\bfseries\color{blue}, % Styl słów kluczowych
+	commentstyle=\itshape\color{green!50!black}, % Styl komentarzy
+	stringstyle=\color{red},      % Styl tekstu w cudzysłowach
+	numbers=left,                 % Numeracja linii po lewej stronie
+	numberstyle=\color{gray},     % Styl numerów linii
+	frame=single,                 % Ramka wokół kodu
+	breaklines=false,             % Zawijanie linii
+	backgroundcolor=\color{gray!10}, % Kolor tła
+	tabsize=2,                    % Wielkość tabulacji
+	showstringspaces=false,        % Ukrywanie spacji w ciągach tekstowych
+	literate={ą}{{\k{a}}}1
+	{Ą}{{\k{A}}}1
+	{ć}{{\'{c}}}1
+	{Ć}{{\'{C}}}1
+	{ę}{{\k{e}}}1
+	{Ę}{{\k{E}}}1
+	{ł}{\l}1
+	{Ł}{\L}1
+	{ń}{{\'{n}}}1
+	{Ń}{{\'{N}}}1
+	{ó}{{\'{o}}}1
+	{Ó}{{\'{O}}}1
+	{ś}{{\'{s}}}1
+	{Ś}{{\'{S}}}1
+	{ź}{{\'{z}}}1
+	{Ź}{{\'{Z}}}1
+	{ż}{{\.{z}}}1
+	{Ż}{{\.{Z}}}1
+}
+\lstset{style=mystyle}
+
+\renewcommand{\figurename}{Rys}
+
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\f}{\mathbf{f}}
+\renewcommand{\b}{\mathbf{b}}
+
+\newcommand{\tytul}{Estymacja parametrów modelu}
+\newcommand{\autor}{Wiktor Murawski}
+\newcommand{\uczelnia}{Politechnika Warszawska}
+\newcommand{\wydzial}{Wydział Matematyki i Nauk Informacyjnych}
+\newcommand{\prowadzacy}{dr inż. Jakub Wagner}
+\newcommand{\przedmiot}{Modelowanie matematyczne}
+\newcommand{\miejsce}{Warszawa}
+\date{\today}
+
+% Dokument
+\begin{document}
+	
+	% STRONA TYTUŁOWA
+	\begin{titlepage}
+		\centering
+		\vspace*{1cm}
+		\LARGE\textbf \tytul \\
+		\vspace{1.5cm}
+		\large
+		%\normalsize
+		Autor: \autor \\
+		\vspace{1cm}
+		Przedmiot: \przedmiot \\
+		Prowadzący: \prowadzacy \\
+		\vspace{2cm}
+		\uczelnia \\
+		\wydzial \\
+		\vspace{2cm}
+		Oświadczam, że niniejsza praca, stanowiąca podstawę do uznania osiągnięcia efektów
+		uczenia się z przedmiotu Modelowanie matematyczne, została wykonana przeze mnie samodzielnie.\\
+		\vspace{2cm}
+		\miejsce \\
+		\today \\
+	\end{titlepage}
+	
+	% SPIS TREŚCI
+	\tableofcontents
+	\newpage
+	
+	% Lista symboli i akronimów
+	\section{Lista Symboli i Akronimów}
+	%\addcontentsline{toc}{section}{Lista Symboli i Akronimów}
+	\begin{spacing}{1.5}
+		\begin{tabbing}
+			\hspace{5cm} \= \hspace{10cm} \= \kill
+			
+		\end{tabbing}
+	\end{spacing}
+	\newpage
+	
+	% Wprowadzenie
+	\section{Wprowadzenie}
+	Dany jest następujący układ równań różniczkowych zwyczajnych (URRZ):
+	
+	\newpage
+	
+	% Metodyka i wyniki doświadczeń
+	\section{Metodyka i Wyniki Doświadczeń}
+	%Opis wykonanych doświadczeń i obliczeń, zarówno w środowisku MATLAB, jak i na papierze. Szczegóły pozwalające na odtworzenie wyników.
+	
+	\newpage
+	% Dyskusja wyników eksperymentów numerycznych
+	\section{Dyskusja Wyników Eksperymentów Numerycznych}
+	
+	\newpage
+	
+	% Lista źródeł informacji
+	\section*{Bibliografia}
+	\addcontentsline{toc}{section}{Bibliografia}
+	\begin{enumerate}
+		\item Dokumentacja MATLAB: \url{https://www.mathworks.com/help/matlab}.
+	\end{enumerate}
+	
+	\newpage
+	
+	% Listing opracowanych programów
+	\section*{Listing Programów}
+	\addcontentsline{toc}{section}{Listing Programów}
+	
+	\subsection*{plik \texttt{Projekt2.m}}
+	\lstinputlisting{../Projekt2.m}
+	%\newpage
+	%\subsection*{plik \texttt{solve\_using\_dsolve.m}}
+	%\lstinputlisting{../solve_using_dsolve.m}
+	%\subsection*{plik \texttt{plot\_exact.m}}
+	%\lstinputlisting{../plot_exact.m}
+	%\subsection*{plik \texttt{metoda1.m}}
+	%\lstinputlisting{../metoda1.m}
+	%\newpage
+	%\subsection*{plik \texttt{metoda2.m}}
+	%\lstinputlisting{../metoda2.m}
+	%\subsection*{plik \texttt{metoda3.m}}
+	%\lstinputlisting{../metoda3.m}
+	%\newpage
+	%\subsection*{plik \texttt{plot\_results.m}}
+	%\lstinputlisting{../plot_results.m}
+	%\subsection*{plik \texttt{calculate\_error.m}}
+	%\lstinputlisting{../calculate_error.m}
+	
+\end{document}

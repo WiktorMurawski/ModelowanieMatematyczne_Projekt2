@@ -1,5 +1,4 @@
-function m = approximate_mass(t_vals, x1, x2, x3, y1, y2, y3)
-
+function m = ApproximateMass(t_vals, x1, x2, x3, y1, y2, y3)
   N = length(t_vals);
 
   % 'Wygładzanie' zaburzonych danych
@@ -35,12 +34,12 @@ function m = approximate_mass(t_vals, x1, x2, x3, y1, y2, y3)
     r12 = sqrt((x1(i)-x2(i))^2 + (y1(i)-y2(i))^2);
     r13 = sqrt((x1(i)-x3(i))^2 + (y1(i)-y3(i))^2);
     r23 = sqrt((x2(i)-x3(i))^2 + (y2(i)-y3(i))^2);
-    m_mat(i,1) = ddx1(i)/((x2(i) - x1(i))/r12^3 + (x3(i) - x1(i))/r13^3);
-    m_mat(i,2) = ddy1(i)/((y2(i) - y1(i))/r12^3 + (y3(i) - y1(i))/r13^3);
-    m_mat(i,3) = ddx2(i)/((x3(i) - x2(i))/r23^3 + (x1(i) - x2(i))/r12^3);
-    m_mat(i,4) = ddy2(i)/((y3(i) - y2(i))/r23^3 + (y1(i) - y2(i))/r12^3);
-    m_mat(i,5) = ddx3(i)/((x1(i) - x3(i))/r13^3 + (x2(i) - x3(i))/r23^3);
-    m_mat(i,6) = ddy3(i)/((y1(i) - y3(i))/r13^3 + (y2(i) - y3(i))/r23^3);
+    m_mat(i,1) = ddx1(i) / ((x2(i) - x1(i))/r12^3 + (x3(i) - x1(i))/r13^3);
+    m_mat(i,2) = ddy1(i) / ((y2(i) - y1(i))/r12^3 + (y3(i) - y1(i))/r13^3);
+    m_mat(i,3) = ddx2(i) / ((x3(i) - x2(i))/r23^3 + (x1(i) - x2(i))/r12^3);
+    m_mat(i,4) = ddy2(i) / ((y3(i) - y2(i))/r23^3 + (y1(i) - y2(i))/r12^3);
+    m_mat(i,5) = ddx3(i) / ((x1(i) - x3(i))/r13^3 + (x2(i) - x3(i))/r23^3);
+    m_mat(i,6) = ddy3(i) / ((y1(i) - y3(i))/r13^3 + (y2(i) - y3(i))/r23^3);
   end
   
   % Zignorowanie wartości ze skrajów przedziału dla każdej zmiennej
