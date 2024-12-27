@@ -197,8 +197,10 @@
 	\end{aligned}
 	$$
 	W ten sposób, dla różnych $n$, wyznaczono różne wartości mające być przybliżeniem iloczynu $Gm$.
-	Przez względnie dużą niedokładność danych pomiarowych przybliżenia były błędne (na przykład ujemne bądź bardzo odchylone od reszty), w szczególności te na końcach przedziału. W celu zminimalizowania wpływu błędów pomiarów dane wygładzono korzystając z wbudownej w środkowisko \texttt{MATLAB} funkcji \texttt{movmean}.
+	Przez względnie dużą niedokładność danych pomiarowych przybliżenia były błędne (na przykład ujemne bądź bardzo odchylone od reszty), w szczególności te na końcach przedziału. W celu zminimalizowania wpływu błędów pomiarów dane wygładzono korzystając ze średniej ruchomej. Kilka skrajnych wartości z danych zignorowano. Następnie sprawdzono, dla której współrzędnej wyznaczone iloczyny $Gm$ są najmniej oddalone od średniej.\\
+	Okazało się, że najlepsze przybliżenie początkowe daje wzór na $Gm$ wykorzystujący drugą pochodną $x_1$. Otrzymano $Gm = 0.361115456$ (dokładność do 9 cyfr znaczących).
 	
+	\subsection{Zdefiniowanie URRZ}
 	%\newpage
 	
 	% Dyskusja wyników eksperymentów numerycznych
