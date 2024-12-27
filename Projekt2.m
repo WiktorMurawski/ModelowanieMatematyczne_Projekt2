@@ -7,21 +7,21 @@ function result = Projekt2()
   x3 = data.x3; y3 = data.y3;
   data = [x1, y1, x2, y2, x3, y3];
 
-  % Wczytanie wartości czasu
+  % Wczytanie wartości czasu z zapytania
   data2 = readtable("query_30.csv");
   t_query = data2.t;
  
   % Przybliżenie początkowych wartości pochodnych
-  dx1 = ApproximateDerivative(t_query, x1);
-  dy1 = ApproximateDerivative(t_query, y1);
-  dx2 = ApproximateDerivative(t_query, x2);
-  dy2 = ApproximateDerivative(t_query, y2);
-  dx3 = ApproximateDerivative(t_query, x3);
-  dy3 = ApproximateDerivative(t_query, y3);
+  dx1 = ApproximateDerivative(t_query(1:2), x1(1:2));
+  dy1 = ApproximateDerivative(t_query(1:2), y1(1:2));
+  dx2 = ApproximateDerivative(t_query(1:2), x2(1:2));
+  dy2 = ApproximateDerivative(t_query(1:2), y2(1:2));
+  dx3 = ApproximateDerivative(t_query(1:2), x3(1:2));
+  dy3 = ApproximateDerivative(t_query(1:2), y3(1:2));
 
   % Przybliżenie początkowe masy
   Gm = ApproximateMass(t_data, x1, x2, x3, y1, y2, y3);
-  % Gm = 0.361115455784322; % Najlepsza znaleziona masa, delta = 0.0169
+  % Gm = 0.361115455784322; % delta = 0.0169
 
   % Warunki początkowe
   p0 = [ x1(1);  y1(1);  x2(1);  y2(1);  x3(1);  y3(1); 
@@ -39,14 +39,14 @@ function result = Projekt2()
   opts = odeset('RelTol', 1e-12, 'AbsTol', 1e-12);
   [~, z] = ode45(odefun, t_query, pmin(1:12), opts);
   
-  % Przypisanie wyznaczonych wartości x1, y1, x2, y2, x3, y3 w zadanych chwilach
+  % Przypisanie estymatów wartości x1, y1, x2, y2, x3, y3 w danych chwilach
   x1 = z(:, 1); y1 = z(:, 2);
   x2 = z(:, 3); y2 = z(:, 4);
   x3 = z(:, 5); y3 = z(:, 6);
   result = [x1, y1, x2, y2, x3, y3];
 
   % Wizualizacja orbit
-  Visualize(data, result)
+  Visualize(data, result);
 
   % Wyświetlenie wyniku testu dokładności
   test_solution_30(x1, y1, x2, y2, x3, y3);

@@ -1,4 +1,4 @@
-function [] = Visualize(data, calc)
+function [] = VisualizeDynamic(data, calc)
   x1_data = data(:, 1); y1_data = data(:, 2);
   x2_data = data(:, 3); y2_data = data(:, 4);
   x3_data = data(:, 5); y3_data = data(:, 6);
@@ -10,7 +10,7 @@ function [] = Visualize(data, calc)
   c2 = "#FF0000";
   c3 = "#00FF00";
   figure(1); clf; hold on;
-  title('Problem trzech ciał', FontSize=16);
+  title('Problem trzech ciał');
   xlabel('x'); ylabel('y');
   axis equal;
   maxy = max(max([y1_calc, y2_calc, y3_calc]));
@@ -50,14 +50,22 @@ function [] = Visualize(data, calc)
 
   % Wyświetl wyznaczone pozycje dynamicznie
   opts = {'LineStyle', '-', 'Marker', '.', 'MarkerSize', 16};
-  plot(x1_calc, y1_calc, opts{:}, Color=c1, ...
+  o1 = animatedline(opts{:}, Color=c1, ...
     DisplayName='Obiekt 1');
-  plot(x2_calc, y2_calc, opts{:}, Color=c2, ...
+  o2 = animatedline(opts{:}, Color=c2, ...
     DisplayName='Obiekt 2');
-  plot(x3_calc, y3_calc, opts{:}, Color=c3, ...
+  o3 = animatedline(opts{:}, Color=c3, ...
     DisplayName='Obiekt 3');
 
-  legend('show', Interpreter='latex', Color='#FFFFFF', ...
-    Location='bestoutside', FontSize=16);
+  legend("show", Interpreter="latex", Color="#FFFFFF", Location="bestoutside")
+
+  N = length(x1_calc);
+  for i = 1:N
+      addpoints(o1, x1_calc(i), y1_calc(i));
+      addpoints(o2, x2_calc(i), y2_calc(i));
+      addpoints(o3, x3_calc(i), y3_calc(i));
+      drawnow;
+      pause(0.01);
+  end % for i
 
 end % function
