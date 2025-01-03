@@ -9,7 +9,7 @@
 \usepackage{amsmath, amssymb} % Pakiety matematyczne
 \usepackage{mathtools}
 \usepackage{graphicx} % Obsługa grafiki
-\graphicspath{{../images/}}
+\graphicspath{{../img/}}
 \usepackage{enumitem}
 %\usepackage{fontspec}
 \usepackage{float}
@@ -132,21 +132,21 @@
 	
 	Dane zawarte w pliku \texttt{data\_30.csv} reprezentują wyniki pomiaru położenia trzech obiektów o
 	identycznych masach $m$, przyciągających się grawitacyjnie. Trajektorie ruchu tych obiektów opisane
-	są następującym układem nieliniowych równań różniczkowych zwyczajnych drugiego rzędu:
+	są następującym układem nieliniowych równań różniczkowych zwyczajnych drugiego rzędu:\\
 	\begin{equation}	
 		\label{eq1}
 		\hspace{-5cm}
 		\left\{
 		\begin{alignedat}{4}
-			\dfrac{d^2x_1(t)}{dt^2} & = Gm \Big( & \dfrac{x_2(t) - x_1(t)}{r^3_{12}(t)} & + \dfrac{x_3(t) - x_1(t)}{r^3_{13}(t)} & \Big) \\
-			\dfrac{d^2y_1(t)}{dt^2} & = Gm \Big( & \dfrac{y_2(t) - y_1(t)}{r^3_{12}(t)} & + \dfrac{y_3(t) - y_1(t)}{r^3_{13}(t)} & \Big) \\
-			\dfrac{d^2x_2(t)}{dt^2} & = Gm \Big( & \dfrac{x_3(t) - x_2(t)}{r^3_{23}(t)} & + \dfrac{x_1(t) - x_2(t)}{r^3_{12}(t)} & \Big) \\
-			\dfrac{d^2y_2(t)}{dt^2} & = Gm \Big( & \dfrac{y_3(t) - y_2(t)}{r^3_{23}(t)} & + \dfrac{y_1(t) - y_2(t)}{r^3_{12}(t)} & \Big) \\
-			\dfrac{d^2x_3(t)}{dt^2} & = Gm \Big( & \dfrac{x_1(t) - x_3(t)}{r^3_{13}(t)} & + \dfrac{x_2(t) - x_3(t)}{r^3_{23}(t)} & \Big) \\
-			\dfrac{d^2y_3(t)}{dt^2} & = Gm \Big( & \dfrac{y_1(t) - y_3(t)}{r^3_{13}(t)} & + \dfrac{y_2(t) - y_3(t)}{r^3_{23}(t)} & \Big)
+			\dfrac{d^2x_1(t)}{dt^2} & = Gm \Big( & \dfrac{x_2(t) - x_1(t)}{r^3_{12}(t)} & + \dfrac{x_3(t) - x_1(t)}{r^3_{13}(t)} & \Big) \\ \vspace{5em}
+			\dfrac{d^2y_1(t)}{dt^2} & = Gm \Big( & \dfrac{y_2(t) - y_1(t)}{r^3_{12}(t)} & + \dfrac{y_3(t) - y_1(t)}{r^3_{13}(t)} & \Big) \\ \vspace{5em}
+			\dfrac{d^2x_2(t)}{dt^2} & = Gm \Big( & \dfrac{x_3(t) - x_2(t)}{r^3_{23}(t)} & + \dfrac{x_1(t) - x_2(t)}{r^3_{12}(t)} & \Big) \\ \vspace{5em}
+			\dfrac{d^2y_2(t)}{dt^2} & = Gm \Big( & \dfrac{y_3(t) - y_2(t)}{r^3_{23}(t)} & + \dfrac{y_1(t) - y_2(t)}{r^3_{12}(t)} & \Big) \\ \vspace{5em}
+			\dfrac{d^2x_3(t)}{dt^2} & = Gm \Big( & \dfrac{x_1(t) - x_3(t)}{r^3_{13}(t)} & + \dfrac{x_2(t) - x_3(t)}{r^3_{23}(t)} & \Big) \\ \vspace{5em}
+			\dfrac{d^2y_3(t)}{dt^2} & = Gm \Big( & \dfrac{y_1(t) - y_3(t)}{r^3_{13}(t)} & + \dfrac{y_2(t) - y_3(t)}{r^3_{23}(t)} & \Big) \\
 		\end{alignedat}
 		\right.
-	\end{equation}
+	\end{equation}\vspace{1em}
 
 	gdzie:
 	\begin{itemize}[label=\footnotesize$\bullet$, topsep=0pt, parsep=0pt, leftmargin=10mm]
@@ -157,7 +157,7 @@
 		\item $r_{jk}(t) \equiv \sqrt{\left[x_k(t) - x_j(t)\right]^2 + \left[y_k(t) - y_j(t)\right]^2}$ dla $j,k = 1,2,3$.\\
 	\end{itemize}
 	\noindent
-	Wyniki pomiaru położenia są zaburzone oraz nieznana jest masa $m$ obiektów. Wyznaczono przybliżone współrzędne położeń początkowych obiektów oraz przybliżenie masy $m$, a następnie rozwiązano układ \eqref{eq1} w celu wyznaczenia współrzędnych położenia obiektów w chwilach $t$ zapisanych w pliku \texttt{query\_30.csv}.
+	Wyniki pomiaru położenia są zaburzone oraz nieznana jest masa $m$ obiektów. Wyznaczono przybliżone współrzędne położeń początkowych obiektów oraz przybliżenie masy $m$, a następnie rozwiązano układ \eqref{eq1} w celu wyznaczenia współrzędnych położenia obiektów w chwilach $t$ zapisanych w pliku \texttt{query\_30.csv}.\\
 	
 	%\newpage
 	
@@ -165,6 +165,30 @@
 	\section{Metodyka i Wyniki Doświadczeń}
 	%Opis wykonanych doświadczeń i obliczeń, zarówno w środowisku MATLAB, jak i na papierze. Szczegóły pozwalające na odtworzenie wyników.
 	
+	\subsection{Przekształcenie URRZ}
+	W celu rozwiązania URRZ \eqref{eq1} drugiego rzędu za pomocą procedury \texttt{ode45}, przekształcono układ do URRZ rzędu pierwszego:
+	\begin{equation}	
+		\label{eq2}
+		\hspace{-5cm}
+		\left\{
+		\begin{alignedat}{4}			
+			\dfrac{dx_1(t)}{dt} & = v_{x1} \\
+			\dfrac{dy_1(t)}{dt} & = v_{y1} \\
+			\dfrac{dx_2(t)}{dt} & = v_{x2} \\
+			\dfrac{dy_2(t)}{dt} & = v_{y2} \\
+			\dfrac{dx_3(t)}{dt} & = v_{x3} \\
+			\dfrac{dy_3(t)}{dt} & = v_{y3} \\
+			\dfrac{dv_{x1}(t)}{dt} & = Gm \Big( & \dfrac{x_2(t) - x_1(t)}{r^3_{12}(t)} & + \dfrac{x_3(t) - x_1(t)}{r^3_{13}(t)} & \Big) \\
+			\dfrac{dv_{y1}(t)}{dt} & = Gm \Big( & \dfrac{y_2(t) - y_1(t)}{r^3_{12}(t)} & + \dfrac{y_3(t) - y_1(t)}{r^3_{13}(t)} & \Big) \\
+			\dfrac{dv_{x2}(t)}{dt} & = Gm \Big( & \dfrac{x_3(t) - x_2(t)}{r^3_{23}(t)} & + \dfrac{x_1(t) - x_2(t)}{r^3_{12}(t)} & \Big) \\
+			\dfrac{dv_{y2}(t)}{dt} & = Gm \Big( & \dfrac{y_3(t) - y_2(t)}{r^3_{23}(t)} & + \dfrac{y_1(t) - y_2(t)}{r^3_{12}(t)} & \Big) \\
+			\dfrac{dv_{x3}(t)}{dt} & = Gm \Big( & \dfrac{x_1(t) - x_3(t)}{r^3_{13}(t)} & + \dfrac{x_2(t) - x_3(t)}{r^3_{23}(t)} & \Big) \\
+			\dfrac{dv_{y3}(t)}{dt} & = Gm \Big( & \dfrac{y_1(t) - y_3(t)}{r^3_{13}(t)} & + \dfrac{y_2(t) - y_3(t)}{r^3_{23}(t)} & \Big)
+		\end{alignedat}
+		\right.
+	\end{equation}
+	
+	\subsection{Wyznaczenie warunków początkowych położenia i ich pochodnych}
 	Z pliku \texttt{data\_30.csv} odczytano wyniki pomiaru położeń trzech obiektów. Wyznaczono przybliżone wartości pochodnych $x_k'(t_0)$ i $y_k'(t_0)$ dla $k = 1,2,3$ korzystając ze wzoru różnicy w przód:
 	$$ x_0' = \dfrac{x_1 - x_0}{t_1 - t_0} $$
 	Uzyskano następujące warunki początkowe położeń i ich pochodnych: 
@@ -176,13 +200,14 @@
 			\hline
 			-0.554795098 & 0.311684711 & 0.231422269 & -0.376185606 & 0.322675278 & 0.0579379401 \\
 			\hline\
-			$x_1'$ & $y_1'$ & $x_2'$ & $y_2'$ & $x_3'$ & $y_3'$ \\
+			$v_{x1}$ & $v_{y1}$ & $v_{x2}$ & $v_{y2}$ & $v_{x3}$ & $v_{y3}$ \\
 			\hline
 			-0.255664946 & -0.557361492 & 0.778963645 & 0.481299004 & -0.399831836 & 0.250095091 \\
 			\hline
 		\end{tabular}
-		\caption{Wartości $x_k$ i $y_k$ oraz ich pochodne dla $t = t_0$ zaokrąglone do 9 cyfr znaczących}
+		\caption{Wartości $x_k$ i $y_k$ oraz ich pochodne $v_{xk}$ i $v_{yk}$ dla $t = t_0$ zaokrąglone do 9 cyfr znaczących}
 	\end{table}
+	
 	
 	\subsection{Aproksymacja masy}  
 	W celu znalezienia wartości masy $m$ odpowiednio bliskiej faktycznej masie obiektów przekształcono \eqref{eq1} następująco:
@@ -198,13 +223,68 @@
 	$$
 	W ten sposób, dla różnych $n$, wyznaczono różne wartości mające być przybliżeniem iloczynu $Gm$.
 	Przez względnie dużą niedokładność danych pomiarowych przybliżenia były błędne (na przykład ujemne bądź bardzo odchylone od reszty), w szczególności te na końcach przedziału. W celu zminimalizowania wpływu błędów pomiarów dane wygładzono korzystając ze średniej ruchomej. Kilka skrajnych wartości z danych zignorowano. Następnie sprawdzono, dla której współrzędnej wyznaczone iloczyny $Gm$ są najmniej oddalone od średniej.\\
-	Okazało się, że najlepsze przybliżenie początkowe daje wzór na $Gm$ wykorzystujący drugą pochodną $x_1$. Otrzymano $Gm = 0.361115456$ (dokładność do 9 cyfr znaczących).
+	Okazało się, że najlepsze przybliżenie początkowe daje wzór na $Gm$ wykorzystujący drugą pochodną $x_1$. Otrzymano $Gm = 0.361115456$ (dokładność do 9 cyfr znaczących). 
 	
-	\subsection{Zdefiniowanie URRZ}
-	%\newpage
+	\subsection{Dopasowanie parametrów poprzez minimalizację funkcji błędu}
+	Funkcję błędu zdefiniowano jako funkcję przekształcającą 13-elementowy wektor \\ 
+	$\mathbf{p} = \left[ \begin{array}{ccccccccccccc}
+		x_1 & y_1 & x_2 & y_2 & x_3 & y_3 & v_{x1} & v_{y1} & v_{x2} & v_{y2} & v_{x3} & v_{y3} & Gm 
+	\end{array} \right]^T$
+	zawierający warunki początkowe, na pojedynczą wartość błędu średniokwadratowego, obliczanego na podstawie różnic między danymi pomiarowymi a wyznaczonymi estymatami rozwiązania na podstawie parametrów początkowych $\mathbf{p}$.\\
+	Do znalezienia minimum funkcji błędu wykorzystano wbudowaną w środowisko \texttt{MATLAB} funkcję \texttt{fminsearch} warunkami początkowymi $p_0$. Funkcja zwróciła wektor warunków początkowych $\mathbf{p_{min}}$, dla których wartość błędu powinna być minimalna. \vspace{-6pt}
+	\begin{table}[H]
+		\centering
+		\[
+		\begin{array}{|c|r|r|}
+			\hline
+			       & \multicolumn{1}{|c|}{\mathbf{p_0}} & \multicolumn{1}{c|}{\mathbf{p_{\text{min}}}} \\ \hline
+			x_1    & -0.554795097997622                 & -0.553263048869668                           \\
+			y_1    & 0.311684711285866                  & 0.313624244608031                            \\
+			x_2    & 0.231422269108973                  & 0.231127385195129                            \\
+			y_2    & -0.376185606022192                 & -0.373336032975038                           \\
+			x_3    & 0.322675278263600                  & 0.322262184381840                            \\
+			y_3    & 0.057937940057362                  & 0.059426057383732                            \\
+			v_{x1} & -0.255664945942007                 & -0.369138275745365                           \\
+			v_{y1} & -0.557361491961784                 & -0.610833886439908                           \\
+			v_{x2} & 0.778963645043103                  & 0.778373447699517                            \\
+			v_{y2} & 0.481289003900639                  & 0.287622684238942                            \\
+			v_{x3} & -0.399831835911587                 & -0.409745525949235                           \\
+			v_{y3} & 0.250095091068599                  & 0.322932407732306                            \\
+			Gm     & 0.361115455784322                  & 0.361230297281287                            \\ \hline
+		\end{array}
+		\]
+	\end{table}
+	\subsection{Rozwiązanie URRZ z wyznaczonymi parametrami}
+	Do rozwiązania URRZ \eqref{eq2} wykorzystano wbudowaną w środowisko \texttt{MATLAB} funkcję \texttt{ode45} z warunkami początkowymi $\mathbf{p_{min}}$. Wyznaczono położenia wszystkich trzech ciał w momentach danych w pliku \texttt{query\_30.csv}. Trajektorie trzech obiektów przedstawiono na \hyperref[fig:rys1]{rysunku 1.} \\
+
+    \begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.8]{orbity2.pdf}
+	\caption{\normalsize Wyznaczone estymaty orbit obiektów}
+	\label{fig:rys1} % Optional: Use this label for referencing
+	\end{figure}
+
+	\noindent
+	Dla obliczonych estymatów położeń, zawartą w pliku \texttt{test\_solution\_30.p} funkcją\\ \texttt{test\_solution\_30}, obliczono wskaźnik dokładności rozwiązania $\Delta = 0.0169 < 0.02$.
+	
+	\newpage
 	
 	% Dyskusja wyników eksperymentów numerycznych
-	\section{Dyskusja Wyników Eksperymentów Numerycznych}
+	\section{Dyskusja Wyników i Wnioski}
+
+	Problem trzech ciał, będący jednym z klasycznych zagadnień mechaniki nieba oraz teorii chaosu, nie ma ogólnego rozwiązania analitycznego. Z tego względu, rozwiązania tego problemu są często badane numerycznie, z czego wynikają liczne problemy, na przykład dotyczące dokładności danych wejściowych. 
+	W problemie trzech ciał, jakość danych pomiarowych ma kluczowe znaczenie dla dokładności uzyskiwanych wyników. Nawet niewielkie błędy w danych pomiarowych mogą prowadzić do znaczących odchyleń w trajektoriach obiektów. W związku z tym, proces optymalizacji parametrów początkowych miał kluczowe znaczenie dla uzyskania precyzyjnych wyników. \\
+	
+	\noindent
+	Podczas dopasowywania parametrów początkowych, kluczowym było wyznaczenie wartości iloczynu $Gm$ wystarczająco bliskiej wartości faktycznej. Drobne zmiany w wartości $Gm$, na przykład zmiana wartości $Gm \approx 0.361$ na $Gm = 0.360$ lub $Gm = 0.362$ (różnica mniejsza niż $0.3\%$) sprawia, że rozwiązanie przestaje być zadowalające. Choć dane pomiarowe położeń zawierały błędy, funkcja \texttt{fminsearch}, używająca algorytmu korzystającego z metody numerycznej Neldera-Meada do wyznaczania ekstremum, pozwoliła na uzyskanie zadowalających warunków początkowych. \\
+	
+	\noindent
+	Zastosowanie funkcji \texttt{ode45}, korzystającej z jawnej metody Rungego-Kutty 4-go rzędu z poprawką (metoda Dormanda-Prince'a) z adaptacyjnym krokiem, do rozwiązania układu równań różniczkowych okazało się stabilne i skuteczne, nawet w kontekście chaotycznego charakteru problemu trzech ciał. Dzięki temu możliwe było uzyskanie zadowalająco dokładnych trajektorii obiektów w przyszłych momentach czasowych, wykraczających poza zakres danych pomiarowych. \\
+	
+	\noindent
+	Uzyskane rozwiązanie jest jednym z periodycznych rozwiązań problemu trzech ciał.
+	W układzie trzech ciał, periodyczność oznacza, że po pewnym czasie obiekty wracają do swoich początkowych pozycji i prędkości, co prowadzi do cyklicznego powtarzania się trajektorii. Chociaż układ trzech ciał jest w ogólności chaotyczny i wrażliwy na początkowe warunki, istnieją szczególne przypadki, w których rozwiązanie jest periodyczne. Takie trajektorie są stabilne w sensie, że ich kształt i zachowanie powtarzają się w równych odstępach czasu.
+
 	
 	\newpage
 	
@@ -213,6 +293,7 @@
 	\addcontentsline{toc}{section}{Bibliografia}
 	\begin{enumerate}
 		\item Dokumentacja MATLAB: \url{https://www.mathworks.com/help/matlab}.
+		\item \url{https://en.wikipedia.org/wiki/Three-body\_problem}
 	\end{enumerate}
 	
 	\newpage

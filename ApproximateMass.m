@@ -1,7 +1,7 @@
 function m = ApproximateMass(t, x1, x2, x3, y1, y2, y3)
   N = length(t);
 
-  % 'Wygładzanie' zaburzonych danych
+  % Wygładzanie zaburzonych danych
   window_size = 3;
   for i = 1:5
     x1 = movmean(x1, window_size);

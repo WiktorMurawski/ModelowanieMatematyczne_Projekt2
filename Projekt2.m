@@ -19,9 +19,8 @@ function result = Projekt2()
   dx3 = ApproximateDerivative(t_query(1:2), x3(1:2));
   dy3 = ApproximateDerivative(t_query(1:2), y3(1:2));
 
-  % Przybliżenie początkowe masy
+  % Przybliżenie początkowe masy; Gm = 0.361115455784322 -> delta = 0.0169
   Gm = ApproximateMass(t_data, x1, x2, x3, y1, y2, y3);
-  % Gm = 0.361115455784322; % delta = 0.0169
 
   % Warunki początkowe
   p0 = [ x1(1);  y1(1);  x2(1);  y2(1);  x3(1);  y3(1); 
